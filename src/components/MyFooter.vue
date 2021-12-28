@@ -1,0 +1,20 @@
+<template>
+    <footer class="flex flex-wrap mt-8 gap-4 justify-between items-center">
+        <div class="flex-1 gap-4 inline-flex items-center">
+            <div class="whitespace-nowrap">
+                <i class="text-blue-500 fab fa-twitter"></i> tweets per hour
+            </div>
+            <div class="whitespace-nowrap">
+                <i class="text-green-500 fas fa-retweet"></i> retweets per hour
+            </div>
+            <div class="whitespace-nowrap">
+                <i class="text-red-500 fas fa-fire"></i> hot right now
+            </div>
+        </div>
+        <a
+            href="https://twitter.com/scottyzen?ref_src=twsrc%5Etfw"
+            class="twitter-follow-button"
+            data-show-count="false"
+        >Follow @scottyzen</a>
+    </footer>
+</template>
