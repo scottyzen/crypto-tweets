@@ -47,15 +47,12 @@
       </select>
     </div>
 
-    <pre>{{ coins }}</pre>
+    <!-- <pre>{{ coins }}</pre> -->
   </main>
   <MyFooter class="container" />
 </template>
 
 <script>
-const corsAnywhere = "https://cors-anywhere.herokuapp.com/";
-const coinmarketcapApiUrl = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest`
-const ritekitApiUrl = "https://api.ritekit.com/v1/stats/basic/";
 import LoadingIcon from "./components/LoadingIcon.vue";
 import MyFooter from "./components/MyFooter.vue";
 import CoinPrice from "./components/CoinPrice.vue";
@@ -90,18 +87,16 @@ export default {
     async getCoins() {
 
 
-      const url = `/.netlify/functions/cmc`;
+      const url = `/.netlify/functions/cmc?limit=${this.numberOfCoins}`;
       const res = await axios.get(url);
 
-      console.log(res.data);
       this.coins = res.data.data || [];
 
 
       // loop through coins and get their tweets and add to coins
       this.coins.forEach(async (coin) => {
-        const url = ritekitApiUrl + coin.symbol;
-        coin.tweets = await axios.get(url);
-
+        const stats = await axios.get(`/.netlify/functions/ritekit?coin=${coin.symbol}`);
+        coin.tweets = stats.data;
       });
 
     },
