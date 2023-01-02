@@ -6,14 +6,15 @@
     </div>
   </header>
   <main class="container flex-1" v-if="coins">
-    <div class="flex items-end gap-4 my-1">
+    <div class="flex items-end gap-6 my-1">
       <button class="mr-auto underline" @click="toggleOrderByRank">Rank</button>
+      <button class="underline" @click="toggleOrderByExposure">Exposure</button>
       <button class="underline" @click="toggleOrderByTweets">Tweets</button>
       <button class="underline" @click="toggleOrderByRetweets">Retweets</button>
     </div>
     <ul class="grid gap-2 divide-y">
       <li class="pt-1" v-for="(coin) in coins" :key="coin.id">
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-4">
           <h3 class="text-lg">
             <span>{{ coin.cmc_rank }}.</span>
             <strong class="mr-1">{{ coin.name }}</strong>
@@ -21,14 +22,22 @@
           </h3>
           <i v-if="coin.tweets && coin.tweets.stats.color == 3 && coin.tweets.stats.retweets > 2000" class="text-xs text-red-500 fas fa-fire"></i>
         </div>
-        <div class="flex items-center justify-between gap-2">
+        <div class="flex items-center justify-between gap-4">
           <CoinPrice :coin="coin.quote.USD" class="flex-1" />
-          <div class="flex items-center gap-1">
+
+          <div class="flex items-center w-20 gap-1">
+            <i class="fas fa-eye"></i>
+            <span v-if="coin.tweets">{{ coin.tweets.stats.exposure }}</span>
+            <LoadingIcon v-else />
+          </div>
+
+          <div class="flex items-center w-10 gap-1">
             <i class="text-blue-500 fab fa-twitter"></i>
             <span v-if="coin.tweets">{{ coin.tweets.stats.tweets }}</span>
             <LoadingIcon v-else />
           </div>
-          <div class="flex items-center justify-end w-16 gap-1 text-right">
+
+          <div class="flex items-center justify-end w-20 gap-1 text-right">
             <i class="inline-block text-green-500 fas fa-retweet"></i>
             <span v-if="coin.tweets">{{ coin.tweets.stats.retweets }}</span>
             <LoadingIcon v-else />
@@ -132,7 +141,20 @@ export default {
       this.tweetOrder = order;
       this.retweetOrder = null;
       this.rankOrder = null;
-    }
+    },
+    toggleOrderByExposure() {
+      const order = this.exposureOrder === "desc" ? "asc" : "desc";
+      this.coins.sort((a, b) => {
+        if (a.tweets && b.tweets) {
+          return order === "desc" ? b.tweets.stats.exposure - a.tweets.stats.exposure : a.tweets.stats.exposure - b.tweets.stats.exposure;
+        }
+        return 0;
+      });
+      this.exposureOrder = order;
+      this.tweetOrder = null;
+      this.retweetOrder = null;
+      this.rankOrder = null;
+    },
   }
 }
 
