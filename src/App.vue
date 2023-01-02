@@ -89,7 +89,7 @@ export default {
     async getCoins() {
 
       const url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/info";
-      const qString = "?CMC_PRO_API_KEY=" + import.meta.env.VITE_KEY + "&start=1&limit=5&convert=USD";
+      const qString = "?CMC_PRO_API_KEY=" + import.meta.env.VITE_KEY;
 
       const res = await fetch(url + qString, { mode: "no-cors" })
         .then(res => res.json())
