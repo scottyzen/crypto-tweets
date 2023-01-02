@@ -1,5 +1,5 @@
 const axios = require('axios'); 
-const myKey = process.env.CMC_API_KEY || 'd5287307-5565-4f4a-84d5-733cc5a351f3';
+const myKey = process.env.CMC_API_KEY;
 
 
 exports.handler = async (event, context, callback) => {
