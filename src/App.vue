@@ -87,16 +87,13 @@ export default {
   },
   methods: {
     async getCoins() {
-      const url = `${coinmarketcapApiUrl}?limit=${this.numberOfCoins}`;
-      const res = await fetch(coinmarketcapApiUrl, {
-        method: "POST",
-        headers: {
-          "X-CMC_PRO_API_KEY": import.meta.env.VITE_KEY,
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*"
-        }
-      }).then(res => res.json());
+
+      const url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/info";
+      const qString = "?CMC_PRO_API_KEY=" + import.meta.env.VITE_KEY + "&start=1&limit=5&convert=USD";
+
+      const res = await fetch(url + qString, { mode: "no-cors" })
+        .then(res => res.json())
+        .catch(err => console.log(err));
 
       this.coins = res.data.slice(0, this.numberOfCoins);
 
