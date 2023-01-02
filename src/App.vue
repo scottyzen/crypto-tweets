@@ -47,18 +47,19 @@
       </select>
     </div>
 
-    <!-- <pre>{{ coins }}</pre> -->
+    <pre>{{ coins }}</pre>
   </main>
   <MyFooter class="container" />
 </template>
 
 <script>
-
+const corsAnywhere = "https://cors-anywhere.herokuapp.com/";
 const coinmarketcapApiUrl = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest`
 const ritekitApiUrl = "https://api.ritekit.com/v1/stats/basic/";
 import LoadingIcon from "./components/LoadingIcon.vue";
 import MyFooter from "./components/MyFooter.vue";
 import CoinPrice from "./components/CoinPrice.vue";
+import axios from "axios";
 
 export default {
   data() {
@@ -78,7 +79,7 @@ export default {
   },
   watch: {
     numberOfCoins(newValue) {
-      this.coins = null;
+      this.coins = [];
       this.getCoins();
     },
   },
@@ -88,20 +89,19 @@ export default {
   methods: {
     async getCoins() {
 
-      const url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/info";
-      const qString = "?CMC_PRO_API_KEY=" + import.meta.env.VITE_KEY;
 
-      const res = await fetch(url + qString, { mode: "no-cors" })
-        .then(res => res.json())
-        .catch(err => console.log(err));
+      const url = `/.netlify/functions/cmc`;
+      const res = await axios.get(url);
 
-      this.coins = res.data.slice(0, this.numberOfCoins);
+      console.log(res.data);
+      this.coins = res.data.data || [];
 
-      this.bitcoinTweets = await fetch(ritekitApiUrl + "bitcoin").then(res => res.json());
 
       // loop through coins and get their tweets and add to coins
       this.coins.forEach(async (coin) => {
-        coin.tweets = await fetch(ritekitApiUrl + coin.symbol).then(res => res.json());
+        const url = ritekitApiUrl + coin.symbol;
+        coin.tweets = await axios.get(url);
+
       });
 
     },
