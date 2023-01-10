@@ -2,11 +2,11 @@
   <header class="container mb-4">
     <h1 class="mb-2 text-3xl font-semibold underline">Crypto Tweets</h1>
     <div class="flex gap-8">
-      <h2 class="items-end flex-1 h-6 mb-4 text-lg leading-tight">Quickly see how many people are tweeting about your favorite cryptocurrency</h2>
+      <h2 class="items-end flex-1 h-6 mb-8 leading-tight md:text-lg">Quickly see how many people are tweeting about your favorite cryptocurrency</h2>
     </div>
   </header>
   <main class="container flex-1" v-if="coins">
-    <div class="flex items-end gap-6 my-1">
+    <div class="flex items-end gap-4 my-1 text-sm md:gap-6 lg:text-base">
       <button class="mr-auto underline" @click="toggleOrderByRank">Rank</button>
       <button class="underline" @click="toggleOrderByExposure">Exposure</button>
       <button class="underline" @click="toggleOrderByTweets">Tweets</button>
@@ -15,14 +15,14 @@
     <ul class="grid gap-2 divide-y">
       <li class="pt-1" v-for="(coin) in coins" :key="coin.id">
         <div class="flex items-center gap-4">
-          <h3 class="text-lg">
+          <h3 class="md:text-lg">
             <span>{{ coin.cmc_rank }}.</span>
             <strong class="mr-1">{{ coin.name }}</strong>
             <small class="text-xs text-gray-500">{{ coin.symbol }}</small>
           </h3>
           <i v-if="coin.tweets && coin.tweets.stats.color == 3 && coin.tweets.stats.retweets > 2000" class="text-xs text-red-500 fas fa-fire"></i>
         </div>
-        <div class="flex items-center justify-between gap-4">
+        <div class="flex items-center justify-between gap-4 text-sm md:text-base tabular-nums">
           <CoinPrice :coin="coin.quote.USD" class="flex-1" />
 
           <div class="flex items-center w-20 gap-1">
@@ -31,13 +31,13 @@
             <LoadingIcon v-else />
           </div>
 
-          <div class="flex items-center w-10 gap-1">
+          <div class="flex items-center w-10">
             <i class="text-blue-500 fab fa-twitter"></i>
             <span v-if="coin.tweets">{{ coin.tweets.stats.tweets }}</span>
             <LoadingIcon v-else />
           </div>
 
-          <div class="flex items-center justify-end w-20 gap-1 text-right">
+          <div class="flex items-center justify-end gap-1 text-right md:w-20">
             <i class="inline-block text-green-500 fas fa-retweet"></i>
             <span v-if="coin.tweets">{{ coin.tweets.stats.retweets }}</span>
             <LoadingIcon v-else />
