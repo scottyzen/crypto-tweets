@@ -1,6 +1,7 @@
 <template>
   <header class="container mb-4">
     <h1 class="mb-2 text-3xl font-semibold underline">Crypto Tweets</h1>
+    <!-- <pre>{{ coins }}</pre> -->
     <div class="flex gap-8">
       <h2 class="items-end flex-1 h-6 mb-8 leading-tight md:text-lg">Quickly see how many people are tweeting about your favorite cryptocurrency</h2>
     </div>
@@ -98,13 +99,24 @@ export default {
 
       const url = `/.netlify/functions/cmc?limit=${this.numberOfCoins}`;
       const res = await axios.get(url);
+      console.log(res.data.data);
 
       this.coins = res.data.data || [];
+
+      // const hashtagOverwites = [
+      //   { hot: "holochain"},
+      //   { gt: "gatetoken"},
+      //   {
+
+      //   }
+      // ]
 
 
       // loop through coins and get their tweets and add to coins
       this.coins.forEach(async (coin) => {
-        const stats = await axios.get(`/.netlify/functions/ritekit?coin=${coin.symbol}`);
+        // const hashtag = coin.symbol;
+        const hashtag = coin.name.toLowerCase().replace(/ /g, "");
+        const stats = await axios.get(`/.netlify/functions/ritekit?coin=${hashtag}`);
         coin.tweets = stats.data;
       });
 
