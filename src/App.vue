@@ -6,25 +6,21 @@
     </h2>
   </header>
   <main class="container flex-1 text-slate-700" v-if="coins">
-    <div class="relative my-8 overflow-auto border-b rounded shadow bg-slate-100 border-b-slate-300">
+    <div class="relative my-8 overflow-auto border-b rounded shadow bg-slate-600 border-b-slate-300">
       <table class="w-full text-sm text-left border-collapse table-auto">
         <thead>
           <tr>
-            <th
-              class="p-4 pl-8 font-medium text-left border-b cursor-pointer text-slate-600"
-              @click="toggleOrderByRank">
+            <th class="p-4 pl-8 font-medium text-left text-white border-b cursor-pointer" @click="toggleOrderByRank">
               Coin Rank
             </th>
-            <th class="p-4 font-medium text-right border-b cursor-pointer text-slate-600" @click="toggleOrderByTweets">
+            <th class="p-4 font-medium text-right text-white border-b cursor-pointer" @click="toggleOrderByTweets">
               <i class="inline-block text-blue-500 fab fa-twitter"></i> <span>Tweets</span>
             </th>
-            <th
-              class="p-4 font-medium text-right border-b cursor-pointer text-slate-600"
-              @click="toggleOrderByRetweets">
+            <th class="p-4 font-medium text-right text-white border-b cursor-pointer" @click="toggleOrderByRetweets">
               <i class="inline-block text-green-500 fas fa-retweet"></i> <span>Retweets</span>
             </th>
             <th
-              class="p-4 pr-8 font-medium text-right border-b cursor-pointer text-slate-600"
+              class="p-4 pr-8 font-medium text-right text-white border-b cursor-pointer"
               @click="toggleOrderByExposure">
               <i class="fas fa-eye"></i> <span>Exposure</span>
             </th>
